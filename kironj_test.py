@@ -12,8 +12,8 @@ class kironjTest(kironjWindow):
         self.gui=Gui(self)
         self.texture = self.load_texture_2d(
             '3Dmodels/box.png', mipmap=True, anisotrpy=8)
-        self.program = self.load_program('programs/cube_texture_array.glsl')
-        # self.program=self.load_program('programs/cube_simple.glsl')
+        self.program = self.load_program('programs/cube_texture.glsl')
+        # self.program=self.load_program('programs/cube.glsl')
         
         
     def render(self, time: float, frametime: float):
