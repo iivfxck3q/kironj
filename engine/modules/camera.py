@@ -8,7 +8,7 @@ class Camera:
     def __init__(self,obj) -> None:
         self._obj=obj
 
-        self._x, self._y, self._z = 0, 0, 1
+        self._x, self._y, self._z = 0, 0, 0
         self._up=Vector3([0,1,0])
 
         self._yaw, self._pitch, self._roll = 0, 0, 0
