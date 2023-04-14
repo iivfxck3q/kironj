@@ -1,5 +1,4 @@
 builds/
-engine/moderngl_window/
 
 engine/modules/__pycache__/
 engine/__pycache__/
