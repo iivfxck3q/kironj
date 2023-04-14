@@ -26,19 +26,21 @@ class Camera:
 
     @property
     def move_hundler(self):
+        dx=cos(radians(self._yaw))
+        dz=sin(radians(self._yaw))
         if self._forward==True:
-            self._z+=self._dz*self._velocity
-            self._x+=self._dx*self._velocity
+            self._z+=dz*self._velocity
+            self._x+=dx*self._velocity
         if self._backward==True:
-            self._z-=self._dz*self._velocity
-            self._x-=self._dx*self._velocity
+            self._z-=dz*self._velocity
+            self._x-=dx*self._velocity
         
         if self._leftward==True:
-            self._z-=self._dx*self._velocity
-            self._x+=self._dz*self._velocity
+            self._z-=dx*self._velocity
+            self._x+=dz*self._velocity
         if self._rightward==True:
-            self._z+=self._dx*self._velocity
-            self._x-=self._dz*self._velocity
+            self._z+=dx*self._velocity
+            self._x-=dz*self._velocity
         
         if self._upping==True:
             self._y-=0.1
@@ -59,7 +61,7 @@ class Camera:
 
     @property
     def _projection(self):
-        return MatMGLW.perspective(75,848/480,0.1,100)
+        return MatMGLW.perspective(75,848/480,0.1,50000)
     
     @property
     def _matrix(self):
@@ -88,7 +90,7 @@ class Camera:
     def key_input(self,key, action, modifiers):
         if action == self._obj.wnd.keys.ACTION_PRESS:
         #other
-            if key == self._obj.wnd.keys.SPACE:
+            if key == self._obj.wnd.keys.F1:
                 self._obj.wnd.mouse_exclusivity=True if not self._obj.wnd.mouse_exclusivity else False
 
         #move
