@@ -13,27 +13,36 @@ class ModelProp:
     def __init__(self,vao):
         self._vao=vao
         self._textures=None
+        self._textures_index=0
         self._textures_location=0
         self._program=None
 
-        self._position=(-2,0,0)
+        self._position=(0,0,0)
         self._rotation=(0,0,0)
-        self._matrix=self.matrix
+        self._matrix=self.matrix()
 
-    @property
     def matrix(self):
         translation = MatMGLW.translate(self._position)
         rotate=MatMGLW.rotatexyz(self._rotation)
         model_matrix = rotate@translation
         return model_matrix.astype("f4")
+    
+    def update(self,data):
+        if len(data)==1:
+            rangeupd=1
+        else:
+            rangeupd=len(data)
+        for _ in range(rangeupd):
+            self.__dict__[data[_][0]]=data[_][1]
+        return self.__dict__
 
     def draw(self,projection,camera):
         self._program['texture0'].value = self._textures_location
-        self._textures.use(location=self._textures_location)
-
+        self._textures[self._textures_index].use(location=self._textures_location)
+        
         self._program['m_proj'].write(projection.astype("f4"))
-        self._program['m_model'].write(self._matrix)
-        self._program['m_camera'].write(self._matrix@camera.astype("f4"))
+        self._program['m_model'].write(self.matrix())
+        self._program['m_camera'].write(self.matrix()@camera.astype("f4"))
         
         self._vao.render(self._program)
 
@@ -67,12 +76,17 @@ def loadmodel(program,path,texture=None):
 
 
 def loadtexture(textures):
+    texture_array=[]
     if isinstance(textures,list):
         count_textures=len(textures)
     else:
         count_textures=1
     for _ in range(count_textures):
-        image = Image.open(resource_dir / 'textures' / textures)
+        if isinstance(textures,list):
+            file=textures[_]
+        else:
+            file=textures
+        image = Image.open(resource_dir / 'textures' / file)
         image=image.transpose(Image.FLIP_TOP_BOTTOM)
         if image.palette and image.palette.mode.lower() in ["rgb", "rgba"]:
             mode = mode or image.palette.mode
@@ -82,5 +96,6 @@ def loadtexture(textures):
         components = len(data) // (image.size[0] * image.size[1])
 
         texture=mglw.ctx().texture(image.size, components, data,)
+        texture_array.append(texture)
 
-        return texture
+    return texture_array

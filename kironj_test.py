@@ -4,6 +4,7 @@ from engine.modules.world import World
 
 class kironjTest(kironjWindow):
     title='kironjTest'
+    fullscreen=True
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.world=World(self)
@@ -11,7 +12,7 @@ class kironjTest(kironjWindow):
 
     def render(self, time: float, frametime: float):
         super().render(time, frametime)
-        self.world.render()
+        self.world.render(time)
         self.gui.render()
         
 if __name__ == '__main__':

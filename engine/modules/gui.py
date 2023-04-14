@@ -17,13 +17,15 @@ class Gui():
         imgui.text(f"Pos: {self.window.camera.position}")
         imgui.text(f"Rotate: {self.window.camera.rotate}")
         imgui.text(f"Direction: {self.window.camera.direction}")
+        
+        imgui.text(f"test: {self.window.world.box._rotation}")
 
         # changed, self.window.model._model_color = imgui.color_edit3("Cude-Color", *self.window.model._model_color)
-        # changed, self.window.model.texture_index = imgui.slider_int(
-        #     "slide ints", self.window.model.texture_index,
-        #     min_value=0, max_value=1,
-        #     format="%d"
-        # )
+        changed, self.window.world.box._textures_index = imgui.slider_int(
+            "slide ints", self.window.world.box._textures_index,
+            min_value=0, max_value=1,
+            format="%d"
+        )
         changed, self.window._color = imgui.color_edit3("BG-Color", *self.window._color)
         changed, self.window.camera._velocity = imgui.slider_float(
             "Velocity:", self.window.camera._velocity,

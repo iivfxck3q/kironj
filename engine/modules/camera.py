@@ -75,6 +75,7 @@ class Camera:
         x = vector.normalise(vector3.cross(vector.normalise(self._up), z))
         y = vector3.cross(z, x)
 
+
         translate = MatMGLW.translate(self.position)
         rotate=MatMGLW.identity()
         rotate[0:3,0:3]=[
